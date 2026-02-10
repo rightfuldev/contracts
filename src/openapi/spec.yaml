@@ -1,0 +1,247 @@
+openapi: 3.0.3
+info:
+  title: GDPR Sidecar — Microservice Contract
+  description: REST API that microservices must implement to integrate with the GDPR Sidecar.
+  version: 0.1.0
+
+paths:
+  /gdpr/health:
+    get:
+      summary: Health check
+      description: Confirms GDPR endpoints are operational.
+      operationId: gdprHealth
+      responses:
+        "200":
+          description: Healthy
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HealthResponse"
+
+  /gdpr/register:
+    get:
+      summary: Registration info
+      description: Returns entity definitions and supported GDPR actions.
+      operationId: gdprRegister
+      responses:
+        "200":
+          description: Registration payload
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RegisterResponse"
+
+  /gdpr/data/{userId}:
+    get:
+      summary: Get personal data
+      description: Returns all personal data stored for a user.
+      operationId: gdprGetData
+      parameters:
+        - $ref: "#/components/parameters/UserId"
+      responses:
+        "200":
+          description: User data
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DataResponse"
+        "404":
+          description: No data found for this user
+
+    delete:
+      summary: Delete personal data
+      description: Deletes all personal data for a user. Returns what was deleted and what was retained with reasons.
+      operationId: gdprDeleteData
+      parameters:
+        - $ref: "#/components/parameters/UserId"
+      responses:
+        "200":
+          description: Deletion result
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DeleteResponse"
+        "404":
+          description: No data found for this user
+
+  /gdpr/export:
+    post:
+      summary: Export personal data
+      description: Returns a JSON dump of all personal data for a user.
+      operationId: gdprExport
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ExportRequest"
+      responses:
+        "200":
+          description: Export data
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ExportResponse"
+        "404":
+          description: No data found for this user
+
+components:
+  parameters:
+    UserId:
+      name: userId
+      in: path
+      required: true
+      schema:
+        type: string
+        minLength: 1
+
+  schemas:
+    HealthResponse:
+      type: object
+      required: [status]
+      properties:
+        status:
+          type: string
+          enum: [ok]
+
+    RegisterResponse:
+      type: object
+      required: [entities, supportedActions]
+      properties:
+        entities:
+          type: array
+          minItems: 1
+          items:
+            $ref: "#/components/schemas/EntityDefinition"
+        supportedActions:
+          type: array
+          minItems: 1
+          items:
+            type: string
+            enum: [DELETE, EXPORT]
+
+    EntityDefinition:
+      type: object
+      required:
+        [name, stored, processed, dataCategory, personalDataTypes, legalBasis]
+      properties:
+        name:
+          type: string
+          minLength: 1
+        stored:
+          type: boolean
+        processed:
+          type: boolean
+        dataCategory:
+          type: string
+          enum: [STANDARD, SPECIAL_CATEGORY]
+        personalDataTypes:
+          type: array
+          minItems: 1
+          items:
+            type: string
+            minLength: 1
+        legalBasis:
+          type: string
+          enum:
+            [
+              CONSENT,
+              CONTRACT,
+              LEGAL_OBLIGATION,
+              LEGITIMATE_INTEREST,
+              VITAL_INTEREST,
+              PUBLIC_TASK,
+            ]
+
+    DataResponse:
+      type: object
+      required: [userId, data]
+      properties:
+        userId:
+          type: string
+          minLength: 1
+        data:
+          type: array
+          items:
+            type: object
+            required: [entity, records]
+            properties:
+              entity:
+                type: string
+                minLength: 1
+              records:
+                type: array
+                items:
+                  type: object
+
+    DeleteResponse:
+      type: object
+      required: [userId, deleted, retained]
+      properties:
+        userId:
+          type: string
+          minLength: 1
+        deleted:
+          type: array
+          items:
+            type: object
+            required: [entity, recordCount]
+            properties:
+              entity:
+                type: string
+                minLength: 1
+              recordCount:
+                type: integer
+                minimum: 0
+        retained:
+          type: array
+          items:
+            type: object
+            required: [entity, reason, legalBasis]
+            properties:
+              entity:
+                type: string
+                minLength: 1
+              reason:
+                type: string
+                minLength: 1
+              legalBasis:
+                type: string
+                enum:
+                  [
+                    CONSENT,
+                    CONTRACT,
+                    LEGAL_OBLIGATION,
+                    LEGITIMATE_INTEREST,
+                    VITAL_INTEREST,
+                    PUBLIC_TASK,
+                  ]
+
+    ExportRequest:
+      type: object
+      required: [userId]
+      properties:
+        userId:
+          type: string
+          minLength: 1
+
+    ExportResponse:
+      type: object
+      required: [userId, data]
+      properties:
+        userId:
+          type: string
+          minLength: 1
+        data:
+          type: array
+          items:
+            type: object
+            required: [entity, records]
+            properties:
+              entity:
+                type: string
+                minLength: 1
+              records:
+                type: array
+                items:
+                  type: object
