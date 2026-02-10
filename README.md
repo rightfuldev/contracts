@@ -1,17 +1,17 @@
-# gdpr-contracts
+# @rightful/contracts
 
 Shared contracts for the GDPR Sidecar system. Includes TypeScript types, Zod validation schemas, shared enums, and NATS subject definitions for communication between the GDPR Service and GDPR Sidecar.
 
 ## Installation
 
 ```bash
-npm install gdpr-contracts
+npm install @rightful/contracts
 ```
 
 ## Usage
 
 ```typescript
-import { /* types, schemas, enums, subjects */ } from 'gdpr-contracts';
+import { /* types, schemas, enums, subjects */ } from '@rightful/contracts';
 ```
 
 ## Package Contents
