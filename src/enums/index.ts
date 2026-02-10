@@ -1,0 +1,33 @@
+export enum GdprAction {
+  DELETE = 'DELETE',
+  EXPORT = 'EXPORT',
+}
+
+export enum LegalBasis {
+  CONSENT = 'CONSENT',
+  CONTRACT = 'CONTRACT',
+  LEGAL_OBLIGATION = 'LEGAL_OBLIGATION',
+  LEGITIMATE_INTEREST = 'LEGITIMATE_INTEREST',
+  VITAL_INTEREST = 'VITAL_INTEREST',
+  PUBLIC_TASK = 'PUBLIC_TASK',
+}
+
+export enum DataCategory {
+  STANDARD = 'STANDARD',
+  SPECIAL_CATEGORY = 'SPECIAL_CATEGORY',
+}
+
+export enum SidecarStatus {
+  NEW = 'NEW',
+  IN_PROGRESS = 'IN_PROGRESS',
+  COMPLETED = 'COMPLETED',
+  FAILED = 'FAILED',
+}
+
+export enum ProcessStatus {
+  NEW = 'NEW',
+  FORWARDING = 'FORWARDING',
+  IN_PROGRESS = 'IN_PROGRESS',
+  COMPLETED = 'COMPLETED',
+  FAILED = 'FAILED',
+}
