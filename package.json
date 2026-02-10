@@ -1,5 +1,5 @@
 {
-  "name": "gdpr-contracts",
+  "name": "@rightful/contracts",
   "version": "0.1.0",
   "description": "Shared contracts for the GDPR Sidecar system. Includes TypeScript types, Zod validation schemas, shared enums, and NATS subject definitions for communication between the GDPR Service and GDPR Sidecar.",
   "main": "dist/index.js",
@@ -7,6 +7,9 @@
   "files": [
     "dist"
   ],
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "build": "tsc",
     "dev": "tsc --watch",
