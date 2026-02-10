@@ -1,0 +1,24 @@
+{
+  "name": "gdpr-contracts",
+  "version": "1.0.0",
+  "description": "Shared contracts for the GDPR Sidecar system. Includes TypeScript types, Zod validation schemas, shared enums, and NATS subject definitions for communication between the GDPR Service and GDPR Sidecar.",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "clean": "rm -rf dist",
+    "prepublishOnly": "npm run build"
+  },
+  "author": "Yanik Peiffer",
+  "license": "ISC",
+  "devDependencies": {
+    "typescript": "^5.3.3"
+  },
+  "dependencies": {
+    "zod": "^3.22.4"
+  }
+}
