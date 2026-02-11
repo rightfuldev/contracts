@@ -26,6 +26,7 @@ export interface ActionRequestMessage {
   action: GdprAction;
   userId: string;
   uploadUrl?: string; // presigned S3 URL for EXPORT actions
+  s3Key?: string;
 }
 
 export interface ActionReceiptMessage {

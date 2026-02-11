@@ -27,6 +27,7 @@ export const ActionRequestMessageSchema = z.object({
   action: z.nativeEnum(GdprAction),
   userId: z.string().min(1),
   uploadUrl: z.string().url().optional(),
+  s3Key: z.string().min(1).optional(),
 });
 
 export const DeletedRecordSchema = z.object({
