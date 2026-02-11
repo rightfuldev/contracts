@@ -28,12 +28,12 @@
   "license": "ISC",
   "repository": {
     "type": "git",
-    "url": "https://github.com/yanikpei/gdpr-contracts.git"
+    "url": "https://github.com/rightfuldev/contracts.git"
   },
   "bugs": {
-    "url": "https://github.com/yanikpei/gdpr-contracts/issues"
+    "url": "https://github.com/rightfuldev/contracts/issues"
   },
-  "homepage": "https://github.com/yanikpei/gdpr-contracts#readme",
+  "homepage": "https://github.com/rightfuldev/contracts#readme",
   "engines": {
     "node": ">=18.0.0"
   },
